@@ -28,7 +28,7 @@ class ParseTestCases():
             result = []
             for i in range(len(div_input)):
                 text_input = self.__GetPreText(div_input[i])
-                text_output = self.__GetPreText(div_output[i])
+                text_output = self.__GetPreText(div_output[i]).replace('\n','\r\n')
                 result.append(TestCase(text_input, text_output))
             jsontext = [json.dumps(x.__dict__) for x in result]
             print(f'Сохраняем файл с тест кейсами: {self.task.testcase_file_name}')
@@ -42,4 +42,5 @@ class ParseTestCases():
             print('Output:')
             print(x.output)
         '''
+        print(f'Кол-во тест кейсов: {len(result)}')
         return result
