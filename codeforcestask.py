@@ -1,3 +1,4 @@
+'''Задача CodeForces'''
 import os.path
 
 class CodeForcesTask():

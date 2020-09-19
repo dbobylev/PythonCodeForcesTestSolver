@@ -1,3 +1,4 @@
+'''Парсер тест кейсов со страницы задачи CodeForces'''
 from problemshtml import ProblemsHtml
 from codeforcestask import CodeForcesTask
 from bs4 import BeautifulSoup
@@ -14,8 +15,10 @@ class ParseTestCases():
 
     def GetTextCases(self):
         if os.path.isfile(self.task.testcase_file_name):
-            with open(self.task.testcase_file_name) as filejson:
-                result = json.load(filejson)
+            print(f'Найден файл с тест кейсами: {self.task.testcase_file_name}')
+            with open(self.task.testcase_file_name) as file:
+                json_data = file.read()
+            result = [TestCase(**json.loads(x)) for x in json.loads(json_data)]
         else:
             site = ProblemsHtml(self.task)
             html = site.GetHtml()
@@ -27,12 +30,16 @@ class ParseTestCases():
                 text_input = self.__GetPreText(div_input[i])
                 text_output = self.__GetPreText(div_output[i])
                 result.append(TestCase(text_input, text_output))
+            jsontext = [json.dumps(x.__dict__) for x in result]
+            print(f'Сохраняем файл с тест кейсами: {self.task.testcase_file_name}')
             with open(self.task.testcase_file_name, 'w') as filejson:
-                json.dump(result, filejson)
+                json.dump(jsontext, filejson)
+        '''
         for x in result:
             print('=== Тест кейс ===')
             print('Input:')
             print(x.input)
             print('Output:')
             print(x.output)
+        '''
         return result
