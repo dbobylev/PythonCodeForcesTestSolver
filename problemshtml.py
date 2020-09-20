@@ -1,6 +1,6 @@
 '''
 Класс для загрузки html с задачей и тест кейсами
-С возможностью сохранения на диске, для дебага
+С возможностью сохранения html на диске, для дебага
 '''
 import urllib.request
 import os.path
@@ -16,7 +16,7 @@ class ProblemsHtml():
             with open(self.task.html_file_name, encoding="utf-8") as file:
                 html = file.read()
         else:
-            print(f'Загружаем файл по URL: {self.task.url_path}')
+            print(f'Загружаем файл html по URL: {self.task.url_path}')
             request = urllib.request.urlopen(self.task.url_path)
             html = request.read().decode("utf8")
             request.close()

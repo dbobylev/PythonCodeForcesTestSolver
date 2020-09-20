@@ -20,8 +20,7 @@ class ParseTestCases():
                 json_data = file.read()
             result = [TestCase(**json.loads(x)) for x in json.loads(json_data)]
         else:
-            site = ProblemsHtml(self.task)
-            html = site.GetHtml()
+            html = ProblemsHtml(self.task).GetHtml()
             soup = BeautifulSoup(html, 'html.parser')
             div_input = soup.find_all(class_="input")
             div_output = soup.find_all(class_="output")
