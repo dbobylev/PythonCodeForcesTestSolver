@@ -1,6 +1,4 @@
 ''' Отдельный тест кейс '''
-import json
-
 class TestCase():
     def __init__(self, input, output):
         self.input = input

@@ -5,8 +5,10 @@ from bs4 import BeautifulSoup
 from testcase import TestCase
 import os.path
 import json
+import hashlib
+from datetime import datetime
 
-class ParseTestCases():
+class ProblemSet():
     def __init__(self, task_num, task_char):
         self.task = CodeForcesTask(task_num, task_char)
 
@@ -43,3 +45,21 @@ class ParseTestCases():
         '''
         print(f'Кол-во тест кейсов: {len(result)}')
         return result
+    
+    def SaveSolution(self, solution, hasError):
+
+        IsNewSolve = True
+        texthash = hashlib.sha1(solution.encode('utf-8')).hexdigest()
+        
+        if os.path.isfile(self.task.solve_file_name):
+            with open(self.task.solve_file_name, 'r') as file:
+                data = file.read()
+                IsNewSolve = texthash not in data
+
+        if IsNewSolve:
+            with open(self.task.solve_file_name, 'a', encoding='utf-8') as file:
+                comment = f'\n##### Решение {datetime.now()} {"FAIL" if hasError else "Done"} hash: {texthash}\n\n{solution}\n\n\n'
+                file.write(comment)
+
+
+
